@@ -14,5 +14,6 @@ export const useIncedenceStore = create<IncedenceStore>(set => ({
     set(() => ({
       incidents: data
     }))
-  }
+  },
+  
 }))

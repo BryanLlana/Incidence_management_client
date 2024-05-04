@@ -1,8 +1,12 @@
 import { useEffect, useState } from 'react';
 import { Container, Table, Badge, Modal, Button } from 'react-bootstrap'
 import { useIncedenceStore } from '../../store/incidenceStore';
+import { formatDate } from '../../helpers/formatDate';
+import { useLocation } from 'wouter';
 
 const TableIncidents = () => {
+  const [location, navigate] = useLocation()
+  console.log(location)
   const [selectedIncident, setSelectedIncident] = useState(null);
   const incidents = useIncedenceStore(state => state.incidents)
   const getIncidents = useIncedenceStore(state => state.getIncidents)
@@ -23,6 +27,7 @@ const TableIncidents = () => {
   return (
     <Container className="my-5">
       <h2 className="text-center mb-4 font-bold text-3xl">Lista de Incidencias</h2>
+      <p className='text-blue-600 mb-1'>*Seleccione el título para ver la descripción de la incidencia</p>
       <Table responsive striped bordered hover>
         <thead>
           <tr>
@@ -30,23 +35,45 @@ const TableIncidents = () => {
             <th>Tipo</th>
             <th>Ubicación</th>
             <th>Usuario</th>
+            <th>Fecha</th>
             <th>Estado</th>
+            {location === '/admin/incidents' && (
+              <th>Acciones</th>
+            )}
           </tr>
         </thead>
         <tbody>
           {incidents.map(incidence => (
-            <tr>
+            <tr key={incidence.id}>
               <td>
-                <span className="incident-title" onClick={() => handleIncidentClick(incidence.description)}>{incidence.title}</span>
+                <span className="incident-title cursor-pointer" onClick={() => handleIncidentClick(incidence.description)}>{incidence.title}</span>
               </td>
               <td>{incidence.type}</td>
               <td>{incidence.location}</td>
               <td>{`${incidence.user?.name} ${incidence.user?.lastname}`}</td>
+              <td>{formatDate(incidence.createdAt)}</td>
               <td>
                 <Badge bg={`${incidence.status ? 'success' : 'danger'}`}>
                   {`${incidence.status ? 'Reparada' : 'Pendiente'}`}
                 </Badge>
               </td>
+              { location === '/admin/incidents' && (
+                <td className='flex gap-3'>
+                  <Badge
+                    bg='primary'
+                    className='cursor-pointer'
+                    onClick={() => {
+                      navigate('/edit-incidence/1')
+                    }}
+                  >Editar
+                  </Badge>
+                  <Badge
+                    bg='danger'
+                    className='cursor-pointer'
+                  >Eliminar
+                  </Badge>
+                </td>
+              ) }
             </tr>
           ))}
         </tbody>

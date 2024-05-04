@@ -13,4 +13,9 @@ export type IncidenceForm = {
   userId: number
 }
 
-export type Incidence = IncidenceForm & { id: string, status: boolean, user: User }
+export type Incidence = IncidenceForm & { 
+  id: string, 
+  status: boolean,
+  createdAt: string, 
+  user: User 
+}
