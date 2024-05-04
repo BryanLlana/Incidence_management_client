@@ -5,7 +5,7 @@ import { toast } from 'react-toastify'
 import { useLocation } from 'wouter'
 import { Container, Form, Button} from 'react-bootstrap'
 import { IncidenceForm } from "../../types"
-import { createIncidenceService } from "../../services/incidence/create.service"
+import { createIncidenceService } from "../../services/incidence/createIncidence.service"
 
 const CreateIncidenceView = () => {
   const [location, navigate] = useLocation()

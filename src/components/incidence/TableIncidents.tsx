@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Container, Table, Badge, Modal, Button } from 'react-bootstrap'
-import { useIncedenceStore } from '../../store/incidenceStore';
+import { useIncidenceStore } from '../../store/incidenceStore';
 import { formatDate } from '../../helpers/formatDate';
 import { useLocation } from 'wouter';
 
@@ -8,8 +8,8 @@ const TableIncidents = () => {
   const [location, navigate] = useLocation()
   console.log(location)
   const [selectedIncident, setSelectedIncident] = useState(null);
-  const incidents = useIncedenceStore(state => state.incidents)
-  const getIncidents = useIncedenceStore(state => state.getIncidents)
+  const incidents = useIncidenceStore(state => state.incidents)
+  const getIncidents = useIncidenceStore(state => state.getIncidents)
 
   useEffect(() => {
     getIncidents()
@@ -63,7 +63,7 @@ const TableIncidents = () => {
                     bg='primary'
                     className='cursor-pointer'
                     onClick={() => {
-                      navigate('/edit-incidence/1')
+                      navigate(`/edit-incidence/${incidence.id}`)
                     }}
                   >Editar
                   </Badge>
