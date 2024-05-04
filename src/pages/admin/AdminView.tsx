@@ -9,6 +9,7 @@ const AdminView = () => {
         title="Bienvenido administrador"
         text="Aquí puedes crear, editar, actualizar estado y eliminar incidencias relacionadas con el edificio"
       />
+      
       <TableIncidents />
     </LayoutApp>
   )
