@@ -30,27 +30,27 @@ const FormIncidence = ({ register, errors }: Props) => {
         <Form.Control
           {...register('title', {
             required: 'El título es obligatorio'
-          })} 
-          type="text" 
-          placeholder="Ingrese el título de la incidencia" 
+          })}
+          type="text"
+          placeholder="Ingrese el título de la incidencia"
         />
-        { errors.title && <MessageError>{errors.title.message}</MessageError>}
+        {errors.title && <MessageError>{errors.title.message}</MessageError>}
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="formType">
         <Form.Label>Tipo de Incidencia</Form.Label>
-        <Form.Select 
+        <Form.Select
           {...register('type', {
             required: 'El tipo de incidencia es obligatorio'
           })}
           defaultValue=""
         >
           <option value="" disabled>--Seleccionar tipo de incidencia--</option>
-          { typesOfIncidents.map(type => (
+          {typesOfIncidents.map(type => (
             <option key={type} value={type}>{type}</option>
           ))}
         </Form.Select>
-        { errors.type && <MessageError>{errors.type.message}</MessageError>}
+        {errors.type && <MessageError>{errors.type.message}</MessageError>}
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="formLocation">
@@ -62,20 +62,28 @@ const FormIncidence = ({ register, errors }: Props) => {
           type="text"
           placeholder="Ingrese la ubicación de la incidencia"
         />
-        { errors.location && <MessageError>{errors.location.message}</MessageError>}
+        {errors.location && <MessageError>{errors.location.message}</MessageError>}
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="formDescription">
         <Form.Label>Descripción</Form.Label>
         <Form.Control
-          { ...register('description', {
+          {...register('description', {
             required: 'La descripción es obligatoria'
           })}
           as="textarea"
           rows={4}
           placeholder="Ingrese una descripción detallada de la incidencia"
         />
-        { errors.description && <MessageError>{errors.description.message}</MessageError>}
+        {errors.description && <MessageError>{errors.description.message}</MessageError>}
+      </Form.Group>
+
+      <Form.Group className="mb-3" controlId="formFile">
+        <Form.Label>Adjuntar archivo</Form.Label>
+        <Form.Control {...register('image')} type="file" />
+        <Form.Text className="text-muted">
+          Sube una imagen relacionado con la incidencia.
+        </Form.Text>
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="formType">
@@ -87,11 +95,11 @@ const FormIncidence = ({ register, errors }: Props) => {
           defaultValue={0}
         >
           <option value={0} disabled>--Seleccionar un usuario--</option>
-          { users.map(user => (
+          {users.map(user => (
             <option key={user.id} value={user.id}>{`${user.name} ${user.lastname}`}</option>
           ))}
         </Form.Select>
-        { errors.userId && <MessageError>{errors.userId.message}</MessageError>}
+        {errors.userId && <MessageError>{errors.userId.message}</MessageError>}
       </Form.Group>
     </>
   )

@@ -9,6 +9,8 @@ import { toast } from 'react-toastify';
 const TableIncidents = () => {
   const [location, navigate] = useLocation()
   const [selectedIncident, setSelectedIncident] = useState(null);
+  const [imageName, setImageName] = useState(null);
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL
   const incidents = useIncidenceStore(state => state.incidents)
   const getIncidents = useIncidenceStore(state => state.getIncidents)
   const deleteIncidence = useIncidenceStore(state => state.deleteIncidence)
@@ -18,8 +20,10 @@ const TableIncidents = () => {
   }, [])
 
   // Función para manejar el clic en el título de la incidencia
-  const handleIncidentClick = (description: any) => {
+  const handleIncidentClick = (description: any, imageName: any) => {
     setSelectedIncident(description);
+    setImageName(imageName)
+    console.log(`${BACKEND_URL}/image/incidence/${imageName}`)
   };
 
   // Función para cerrar el modal
@@ -62,7 +66,7 @@ const TableIncidents = () => {
               {incidents.map(incidence => (
                 <tr key={incidence.id}>
                   <td>
-                    <span className="incident-title cursor-pointer" onClick={() => handleIncidentClick(incidence.description)}>{incidence.title}</span>
+                    <span className="incident-title cursor-pointer" onClick={() => handleIncidentClick(incidence.description, incidence.image)}>{incidence.title}</span>
                   </td>
                   <td>{incidence.type}</td>
                   <td>{incidence.location}</td>
@@ -100,7 +104,14 @@ const TableIncidents = () => {
             <Modal.Header closeButton>
               <Modal.Title>Descripción de la Incidencia</Modal.Title>
             </Modal.Header>
-            <Modal.Body>{selectedIncident}</Modal.Body>
+            <Modal.Body>
+              <p>{selectedIncident}</p>
+              {imageName && (
+                <div className="text-center">
+                  <img src={`${BACKEND_URL}/image/incidence/${imageName}`} alt="Imagen de la incidencia" style={{ maxWidth: '100%' }} />
+                </div>
+              )}
+            </Modal.Body>
             <Modal.Footer>
               <Button variant="secondary" onClick={handleClose}>Cerrar</Button>
             </Modal.Footer>

@@ -6,6 +6,7 @@ import { useLocation } from 'wouter'
 import { Container, Form, Button} from 'react-bootstrap'
 import { IncidenceForm } from "../../types"
 import { createIncidenceService } from "../../services/incidence/createIncidence.service"
+import { uploadIncidenceService } from "../../services/incidence/uploadIncidence.service"
 
 const CreateIncidenceView = () => {
   const [location, navigate] = useLocation()
@@ -14,11 +15,16 @@ const CreateIncidenceView = () => {
     description: '',
     type: '',
     location: '',
-    userId: 0
+    userId: 0,
+    image: ''
   } 
   const { register, handleSubmit, formState: { errors }} = useForm({ defaultValues: initialState })
 
   const handleForm = handleSubmit(async (formData: IncidenceForm) => {
+    const formImage = new FormData()
+    formImage.append('image', formData.image[0])
+    const { fileName } = await uploadIncidenceService(formImage)
+    formData.image = fileName
     const data = await createIncidenceService(formData)
     toast.success(data.message)
     navigate('/')
