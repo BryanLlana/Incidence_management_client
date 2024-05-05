@@ -10,7 +10,7 @@ export type IncidenceForm = {
   description: string,
   location: string,
   type: string,
-  userId: number,
+  userId: string,
   image: string
 }
 

@@ -42,9 +42,11 @@ const TableIncidents = () => {
   }
 
   const handleClickStatus = async (id: string) => {
-    updateStatus(id)
-    toast.success("Estado actualizado correctamente")
-    await updateStatusService(id)
+    if (location.startsWith('/admin/incidents')) {
+      updateStatus(id)
+      toast.success("Estado actualizado correctamente")
+      await updateStatusService(id)
+    }
   }
 
   return (
@@ -87,7 +89,7 @@ const TableIncidents = () => {
                     <Badge
                       onClick={() => handleClickStatus(incidence.id)}
                       bg={`${incidence.status ? 'success' : 'danger'}`}
-                      className='cursor-pointer'
+                      className={location.startsWith('/admin/incidents') ? 'cursor-pointer' : ''}
                     >
                       {`${incidence.status ? 'Reparada' : 'Pendiente'}`}
                     </Badge>

@@ -15,10 +15,10 @@ const CreateIncidenceView = () => {
     description: '',
     type: '',
     location: '',
-    userId: 0,
+    userId: '',
     image: ''
   } 
-  const { register, handleSubmit, formState: { errors }} = useForm({ defaultValues: initialState })
+  const { register, handleSubmit, formState: { errors }, watch} = useForm({ defaultValues: initialState })
 
   const handleForm = handleSubmit(async (formData: IncidenceForm) => {
     const formImage = new FormData()
@@ -35,7 +35,7 @@ const CreateIncidenceView = () => {
       <Container className="my-5 md:w-[50%]">
         <h2 className="text-center mb-4 text-3xl font-bold">Reportar Incidencia</h2>
         <Form onSubmit={handleForm} noValidate>
-          <FormIncidence register={register} errors={errors} />
+          <FormIncidence register={register} errors={errors} watch={watch}/>
           <Button type="submit" className="w-100 bg-[#019D9A] font-bold">Enviar Reporte</Button>
         </Form>
       </Container>
