@@ -5,6 +5,7 @@ import { formatDate } from '../../helpers/formatDate';
 import { useLocation } from 'wouter';
 import { deleteIncidenceService } from '../../services/incidence/deleteIncidence.service';
 import { toast } from 'react-toastify';
+import { updateStatusService } from '../../services/incidence/updateStatus.service';
 
 const TableIncidents = () => {
   const [location, navigate] = useLocation()
@@ -14,6 +15,7 @@ const TableIncidents = () => {
   const incidents = useIncidenceStore(state => state.incidents)
   const getIncidents = useIncidenceStore(state => state.getIncidents)
   const deleteIncidence = useIncidenceStore(state => state.deleteIncidence)
+  const updateStatus = useIncidenceStore(status => status.updateStatus)
 
   useEffect(() => {
     getIncidents()
@@ -32,10 +34,19 @@ const TableIncidents = () => {
   };
 
   const handleClick = async (id: string) => {
-    deleteIncidence(id)
-    toast.success("Incidencia eliminada correctamente")
-    await deleteIncidenceService(id)
+    if (confirm('¿Esta seguro de eliminar la incidencia?')) {
+      deleteIncidence(id)
+      toast.success("Incidencia eliminada correctamente")
+      await deleteIncidenceService(id)
+    }
   }
+
+  const handleClickStatus = async (id: string) => {
+    updateStatus(id)
+    toast.success("Estado actualizado correctamente")
+    await updateStatusService(id)
+  }
+
   return (
     <Container className="my-5">
       <h2 className="text-center mb-4 font-bold text-3xl">Lista de Incidencias</h2>
@@ -73,7 +84,11 @@ const TableIncidents = () => {
                   <td>{`${incidence.user?.name} ${incidence.user?.lastname}`}</td>
                   <td>{formatDate(incidence.createdAt)}</td>
                   <td>
-                    <Badge bg={`${incidence.status ? 'success' : 'danger'}`}>
+                    <Badge
+                      onClick={() => handleClickStatus(incidence.id)}
+                      bg={`${incidence.status ? 'success' : 'danger'}`}
+                      className='cursor-pointer'
+                    >
                       {`${incidence.status ? 'Reparada' : 'Pendiente'}`}
                     </Badge>
                   </td>
