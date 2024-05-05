@@ -9,7 +9,7 @@ import { createIncidenceService } from "../../services/incidence/createIncidence
 import { uploadIncidenceService } from "../../services/incidence/uploadIncidence.service"
 
 const CreateIncidenceView = () => {
-  const [location, navigate] = useLocation()
+  const [, navigate] = useLocation()
   const initialState: IncidenceForm = {
     title: '',
     description: '',

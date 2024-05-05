@@ -12,7 +12,7 @@ type Props = {
 }
 
 const FormEditIncidence = ({ incidence }: Props) => {
-  const [location, navigate] = useLocation()
+  const [, navigate] = useLocation()
   const initialState: IncidenceForm = {
     title: incidence.title,
     description: incidence.description,
