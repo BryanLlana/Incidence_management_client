@@ -14,6 +14,7 @@ const LayoutApp = ({ children }: { children: ReactNode }) => {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ms-auto flex flex-col md:flex-row gap-3 mt-2 md:mt-0">
               <Link href="/" className='text-white'>Incidencias</Link>
+              <Link href="/admin/incidents" className='text-white'>Admin</Link>
             </Nav>
           </Navbar.Collapse>
         </Container>
