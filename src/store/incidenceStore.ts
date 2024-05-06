@@ -24,7 +24,7 @@ export const useIncidenceStore = create<IncidenceStore>(set => ({
   },
   deleteIncidence: async (id: string) => {
     set(state => {
-      const incidentsUpdate = state.incidentsCopy.filter(incidence => incidence.id !== id)
+      const incidentsUpdate = state.incidents.filter(incidence => incidence.id !== id)
       return {
         incidents: incidentsUpdate
       }
@@ -32,7 +32,7 @@ export const useIncidenceStore = create<IncidenceStore>(set => ({
   },
   updateStatus: (id) => {
     set(state => {
-      const incidentsUpdate = state.incidentsCopy.map(incidence => {
+      const incidentsUpdate = state.incidents.map(incidence => {
         if (incidence.id === id) {
           incidence.status = !incidence.status
           return incidence
