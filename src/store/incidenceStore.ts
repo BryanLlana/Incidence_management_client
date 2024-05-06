@@ -48,7 +48,7 @@ export const useIncidenceStore = create<IncidenceStore>(set => ({
   filterIncidents: (date, status) => {
     set(state => {
       const statusFilter = status === 'true' ? false : status === 'false' ? true : ''
-      const incidentsFilter = state.incidentsCopy.filter(incidence => {
+      const incidentsFilter = state.incidents.filter(incidence => {
         const dateIncidence = incidence.createdAt.split('T')[0]
         if (date) {
           if (incidence.status !== statusFilter && dateIncidence.toString() === date.toString()) {
