@@ -24,15 +24,16 @@ export const useIncidenceStore = create<IncidenceStore>(set => ({
   },
   deleteIncidence: async (id: string) => {
     set(state => {
-      const incidentsUpdate = state.incidents.filter(incidence => incidence.id !== id)
+      const incidentsUpdate = state.incidentsCopy.filter(incidence => incidence.id !== id)
       return {
-        incidents: incidentsUpdate
+        incidents: incidentsUpdate,
+        incidentsCopy: incidentsUpdate
       }
     })
   },
   updateStatus: (id) => {
     set(state => {
-      const incidentsUpdate = state.incidents.map(incidence => {
+      const incidentsUpdate = state.incidentsCopy.map(incidence => {
         if (incidence.id === id) {
           incidence.status = !incidence.status
           return incidence
@@ -41,14 +42,15 @@ export const useIncidenceStore = create<IncidenceStore>(set => ({
         }
       })
       return {
-        incidents: incidentsUpdate
+        incidents: incidentsUpdate,
+        incidentsCopy: incidentsUpdate
       }
     })
   },
   filterIncidents: (date, status) => {
     set(state => {
       const statusFilter = status === 'true' ? false : status === 'false' ? true : ''
-      const incidentsFilter = state.incidents.filter(incidence => {
+      const incidentsFilter = state.incidentsCopy.filter(incidence => {
         const dateIncidence = incidence.createdAt.split('T')[0]
         if (date) {
           if (incidence.status !== statusFilter && dateIncidence.toString() === date.toString()) {
